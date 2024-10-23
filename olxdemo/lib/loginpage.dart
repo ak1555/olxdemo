@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
@@ -13,6 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  final mybox =Hive.box('mybox');
   bool checkboxvalue = false;
 
   void adddata() async {
@@ -20,10 +22,29 @@ class _LoginPageState extends State<LoginPage> {
     final res = await http.post(Uri.parse("http://jandk.tech/api/signin"),
         headers: {"Content-Type": "application/json"}, body: json.encode(mp));
     print(jsonDecode(res.body));
+    print(res.statusCode);
 
   if(res.statusCode==200){
     Map m=jsonDecode(res.body);
-    String a=m[1];
+    String a=m["token"];
+     mybox.put(1, a);
+
+    print(a);
+          // final resp=await http.get(Uri.parse('http://jandk.tech/api/getproducts'),
+          // headers: {
+          //   "Authorization":"Bearer ${a}"
+          // }
+          // );
+          // print(resp.body);
+          Navigator.pushNamed(context, "home",);
+          // mybox.put(1, resp.body);
+
+
+    showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text("SUCCESS"),
+      );
+    },);
   }else{
     showDialog(context: context, builder: (context) {
       return AlertDialog(
