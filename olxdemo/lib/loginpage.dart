@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 child: Card(
                   borderOnForeground: true,
-                  shape: BeveledRectangleBorder(
+                  shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5),
                       side: BorderSide(color: Colors.red.shade500, width: 1)),
                   color: const Color.fromARGB(255, 80, 110, 192),
                   child: Column(
